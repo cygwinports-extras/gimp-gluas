@@ -1,0 +1,9 @@
+CATEGORY="Graphics"
+SUMMARY="GIMP plugin for testing image processing algorithms"
+DESCRIPTION="Gluas is a GIMP plug-in providing a enviroment for testing
+algorithms for image processing.  The environment contains a simple
+editor for entering the algorithms.  It uses the lua interpreter."
+HOMEPAGE="http://pippin.gimp.org/plug-ins/gluas/"
+SRC_URI="http://pippin.gimp.org/plug-ins/gluas/files/gluas-${PV}.tar.gz"
+SRC_DIR="gluas-${PV}"
+PATCH_URI="01-gtksourceview2.patch"

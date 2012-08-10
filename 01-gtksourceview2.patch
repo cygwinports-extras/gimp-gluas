@@ -1,0 +1,52 @@
+--- origsrc/gluas-0.1.20/configure.in	2008-12-11 08:25:44.000000000 -0600
++++ src/gluas-0.1.20/configure.in	2012-08-10 01:25:46.340308400 -0500
+@@ -96,7 +96,7 @@ AC_ARG_ENABLE(gtksourceview,
+   [use_gtksourceview=$enableval], [use_gtksourceview=yes])
+ 
+ if test "x$use_gtksourceview" = "xyes"; then
+-    PKG_CHECK_MODULES(GTKSOURCEVIEW, gtksourceview-1.0 >= 1.1.0,
++    PKG_CHECK_MODULES(GTKSOURCEVIEW, gtksourceview-2.0,
+         [use_gtksourceview=yes],
+         [use_gtksourceview="no (code will not be syntax highlighted, see http:///gtksourceview.sourceforge.net)"]
+     )
+--- origsrc/gluas-0.1.20/src/interface.c	2005-03-30 15:00:31.000000000 -0600
++++ src/gluas-0.1.20/src/interface.c	2012-08-10 01:34:47.109228200 -0500
+@@ -42,7 +42,7 @@
+ #include <gtksourceview/gtksourcebuffer.h>
+ #include <gtksourceview/gtksourceview.h>
+ #include <gtksourceview/gtksourcelanguage.h>
+-#include <gtksourceview/gtksourcelanguagesmanager.h>
++#include <gtksourceview/gtksourcelanguagemanager.h>
+ 
+ #endif
+ 
+@@ -316,11 +316,11 @@ dialog (gint32              image_ID,
+   scroll        = gtk_scrolled_window_new (NULL, NULL);
+ #ifdef USE_GTKSOURCEVIEW
+   {
+-    GtkSourceLanguagesManager *lm;
++    GtkSourceLanguageManager  *lm;
+     GtkSourceLanguage         *lang;
+     
+-    lm = gtk_source_languages_manager_new ();
+-    lang = gtk_source_languages_manager_get_language_from_mime_type (lm, "text/x-lua");
++    lm = gtk_source_language_manager_new ();
++    lang = gtk_source_language_manager_guess_language (lm, NULL, "text/x-lua");
+ 
+     script_view   = gtk_source_view_new ();
+     script_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (script_view));
+@@ -328,12 +328,12 @@ dialog (gint32              image_ID,
+     if (lang)
+       {
+         gtk_source_buffer_set_language (GTK_SOURCE_BUFFER (script_buffer), lang);
+-        gtk_source_buffer_set_highlight (GTK_SOURCE_BUFFER (script_buffer), TRUE);
++        gtk_source_buffer_set_highlight_syntax (GTK_SOURCE_BUFFER (script_buffer), TRUE);
+       }
+ 
+     gtk_source_view_set_show_line_numbers (GTK_SOURCE_VIEW (script_view), TRUE);
+     gtk_source_view_set_auto_indent       (GTK_SOURCE_VIEW (script_view), TRUE);
+-    gtk_source_view_set_tabs_width        (GTK_SOURCE_VIEW (script_view), 4);
++    gtk_source_view_set_indent_width      (GTK_SOURCE_VIEW (script_view), 4);
+   }
+ #else
+   script_view   = gtk_text_view_new ();
