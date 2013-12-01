@@ -1,0 +1,10 @@
+--- origsrc/gluas-0.1.20/src/interface.c	2013-12-01 02:25:34.507368400 -0600
++++ src/gluas-0.1.20/src/interface.c	2013-12-01 02:26:36.436910600 -0600
+@@ -22,6 +22,7 @@
+ #include "config.h"
+ 
+ #include <string.h>
++#include <stdlib.h>
+ 
+ #include <libgimp/gimp.h>
+ #include <libgimp/gimpui.h>
